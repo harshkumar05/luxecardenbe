@@ -1,6 +1,6 @@
 package com.pp.luxecardenbe.controllers;
 
-import com.pp.luxecardenbe.model.h2.OtpAuth;
+import com.pp.luxecardenbe.model.RequestBody.OtpAuth;
 import com.pp.luxecardenbe.services.EmailService;
 import com.pp.luxecardenbe.services.OtpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,14 @@ public class AuthenticationController {
 
     @PostMapping("/send-otp")
     public ResponseEntity <String> sendOTP(@RequestBody String userEmail){
-       String otp=otpService.generateOtp(userEmail);
+        if(otpService.isUserRegistered(userEmail)){
+            // update the OTP;
+            // may be have the logic to stop further sending if expiry time is not passed
+        }
+        else{
+            otpService.insertOTP(userEmail);
+        }
+       String otp=otpService.insertOTP(userEmail);
        emailService.sendOtp(userEmail,otp);
        return ResponseEntity.ok("OTP Sent to Email "+ userEmail);
     }

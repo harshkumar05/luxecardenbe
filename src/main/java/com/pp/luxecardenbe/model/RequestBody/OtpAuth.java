@@ -1,4 +1,4 @@
-package com.pp.luxecardenbe.model.h2;
+package com.pp.luxecardenbe.model.RequestBody;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
